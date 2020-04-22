@@ -227,6 +227,31 @@ test('input 5: top-up after timeout', t => {
   addMultiple(p, payments)
 })
 
+test('gc 1', t => {
+  const p = account(100)
+
+  const payment = { amount: 1, time: 0 }
+  for (let i = 0; i < 500; i++) p.add(payment)
+
+  // gc should clear all 500 payments
+  t.equal(p.gc(), 0)
+
+  t.end()
+})
+
+test('gc 1', t => {
+  const p = account(100)
+
+  const payment = { amount: 1, time: 0 }
+  for (let i = 0; i < 500; i++) p.add(payment)
+
+  p.add({ amount: 10000, time: Date.now()})
+
+  // gc should leave one remaining payment
+  t.equal(p.gc(), 1)
+  t.end()
+})
+
 function addMultiple (p, arr) {
   const now = Date.now()
   for (let { amount, offset } of arr) {

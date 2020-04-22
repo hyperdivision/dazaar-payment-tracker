@@ -41,3 +41,7 @@ Returns the amount of streamtime remaining on the account in milliseconds.
 #### `p.remainingFunds()`
 
 Returns the amount of funds remaining in the account.
+
+#### `p.gc()`
+
+Clears all consumed payments, returns the number of active payments remaining.

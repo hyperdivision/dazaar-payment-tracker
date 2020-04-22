@@ -24,24 +24,40 @@ module.exports = function (perSecond, minSeconds = 0, offset = 0) {
     let now = Date.now() + minSeconds * 1000
     now -= offset // compensate delay for the seller to receive block
 
-    const funds = payments.reduce(leftoverFunds, 0)
+    let funds = 0
 
-    return funds
-
-    function leftoverFunds (funds, payment, i) {
+    for (let i = 0; i < payments.length; i++) {
+      const { amount, time } = payments[i]
       const nextTime = i + 1 < payments.length ? payments[i + 1].time : now
 
-      const consumed = perSecond * (nextTime - payment.time) / 1000
-      funds += payment.amount - consumed
+      // add current payment
+      funds += amount 
 
-      return funds > 0 ? funds : 0
+      // subtract amount spent since previous payment
+      const consumed = Math.max(0, perSecond * (nextTime - time) / 1000)
+      funds -= consumed
+
+      // if funds are out, clear all earlier payments
+      if (funds < 0) {
+        payments.splice(0, i + 1)
+        i = -1
+        funds = 0
+      }
     }
+
+    return funds
+  }
+
+  function gc () {
+    remainingFunds()
+    return payments.length
   }
 
   return {
     add,
     active,
     remainingTime,
-    remainingFunds
+    remainingFunds,
+    gc
   }
 }
