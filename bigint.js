@@ -17,7 +17,7 @@ module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
 
   function remainingTime () {
     const funds = remainingFunds()
-    return max(0, (funds * 1000n) / perSecond)
+    return max(0n, (funds * 1000n) / perSecond)
   }
 
   function remainingFunds () {
@@ -41,7 +41,7 @@ module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
       if (funds < 0) {
         payments.splice(0, i + 1)
         i = -1
-        funds = 0
+        funds = 0n
       }
     }
 
