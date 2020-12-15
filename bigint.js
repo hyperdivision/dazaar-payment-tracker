@@ -1,4 +1,4 @@
-module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
+module.exports = function (perSecond, minSeconds = 0, offset = 0) {
   if (perSecond === undefined) throw new Error('rate must be specified')
 
   const payments = []
@@ -17,11 +17,11 @@ module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
 
   function remainingTime () {
     const funds = remainingFunds()
-    return max(0n, (funds * 1000n) / perSecond)
+    return max(0, Number(1000n * funds / perSecond))
   }
 
   function remainingFunds () {
-    let now = BigInt(Date.now()) + minSeconds * 1000n
+    let now = Date.now() + minSeconds * 1000
     now -= offset // compensate delay for the seller to receive block
 
     let funds = 0n
@@ -34,7 +34,7 @@ module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
       funds += amount 
 
       // subtract amount spent since previous payment
-      const consumed = max(0n, perSecond * (nextTime - time) / 1000n)
+      const consumed = max(0n, perSecond * BigInt(nextTime - time) / 1000n)
       funds -= consumed
 
       // if funds are out, clear all earlier payments
