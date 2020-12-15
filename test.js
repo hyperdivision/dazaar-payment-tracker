@@ -141,7 +141,7 @@ test('input 1: ok', t => {
 })
 
 test('input 2: ok', t => {
-  const p = account(1000, null, 10)
+  const p = account(1000, null, 50)
 
   setTimeout(() => {
     t.ok(p.active())
