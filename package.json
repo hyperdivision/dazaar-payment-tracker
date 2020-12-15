@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hyperdivision/payment-tracker.git"
+    "url": "git+https://github.com/hyperdivision/dazaar-payment-tracker.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hyperdivision/payment-tracker/issues"
+    "url": "https://github.com/hyperdivision/dazaar-payment-tracker/issues"
   },
-  "homepage": "https://github.com/hyperdivision/payment-tracker#readme"
+  "homepage": "https://github.com/hyperdivision/dazaar-payment-tracker#readme"
 }
