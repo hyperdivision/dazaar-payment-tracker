@@ -17,7 +17,6 @@ module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
 
   function remainingTime () {
     const funds = remainingFunds()
-    console.log('funds', funds)
     return max(0, (funds * 1000n) / perSecond)
   }
 
@@ -29,15 +28,12 @@ module.exports = function (perSecond, minSeconds = 0n, offset = 0n) {
 
     for (let i = 0; i < payments.length; i++) {
       const { amount, time } = payments[i]
-      console.log(i + 1 < payments.length)
       const nextTime = i + 1 < payments.length ? payments[i + 1].time : now
 
       // add current payment
       funds += amount 
 
       // subtract amount spent since previous payment
-      console.log(perSecond, nextTime, time)
-      console.log(nextTime - time)
       const consumed = max(0n, perSecond * (nextTime - time) / 1000n)
       funds -= consumed
 
